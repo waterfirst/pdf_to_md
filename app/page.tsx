@@ -4,7 +4,6 @@ import { useState, useRef, useCallback } from "react";
 import {
   uploadPdfToVercelBlob,
   uploadImageToVercelBlob,
-  getImagePublicUrl,
 } from "./action/storage";
 import { processMistralOcr, processMistralImageOcr } from "./action/mistral";
 import { OCRResponse } from "@mistralai/mistralai/src/models/components/ocrresponse.js";
