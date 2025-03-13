@@ -21,6 +21,12 @@ export async function uploadPdfToVercelBlob(
       throw new Error("Only PDF files can be uploaded.");
     }
 
+    // Check file size (20MB limit)
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+    if (file.size > MAX_FILE_SIZE) {
+      throw new Error("File size exceeds the 20MB limit. Please upload a smaller file.");
+    }
+
     // Generate filename using UUID if filePath not specified
     const path = filePath || `${folderName}/${uuidv4()}_${file.name}`;
 
@@ -41,7 +47,6 @@ export async function uploadPdfToVercelBlob(
   }
 }
 
-
 /**
  * Function to upload image files to Vercel Blob
  * @param file Image file to upload
@@ -59,6 +64,12 @@ export async function uploadImageToVercelBlob(
     const validImageTypes = ["image/jpeg", "image/png"];
     if (!validImageTypes.includes(file.type)) {
       throw new Error("Only image files (JPEG, PNG) can be uploaded.");
+    }
+
+    // Check file size (20MB limit)
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+    if (file.size > MAX_FILE_SIZE) {
+      throw new Error("File size exceeds the 20MB limit. Please upload a smaller file.");
     }
 
     // Generate filename using UUID if filePath not specified

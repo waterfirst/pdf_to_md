@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import {
-  uploadPdfToVercelBlob,
-  uploadImageToVercelBlob,
-} from "./action/storage";
+import { uploadPdfToVercelBlob, uploadImageToVercelBlob } from "./action/storage";
 import { processMistralOcr, processMistralImageOcr } from "./action/mistral";
 import { OCRResponse } from "@mistralai/mistralai/src/models/components/ocrresponse.js";
 import OcrResultView from "./components/OcrResultView";
@@ -39,6 +36,12 @@ export default function FileUploader() {
     return file.type === "application/pdf";
   };
 
+  // Check if file size is valid (under 20MB)
+  const isValidFileSize = (file: File): boolean => {
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+    return file.size <= MAX_FILE_SIZE;
+  };
+
   // Get file type
   const getFileType = (file: File): "pdf" | null => {
     if (file.type === "application/pdf") return "pdf";
@@ -48,14 +51,20 @@ export default function FileUploader() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       const newFile = acceptedFiles[0];
-      if (isValidFileType(newFile)) {
-        setFile(newFile);
-        setUploadResult(null);
-        setOcrResult(null);
-        handleUpload(newFile);
-      } else {
+      if (!isValidFileType(newFile)) {
         alert("Only PDF files can be uploaded");
+        return;
       }
+
+      if (!isValidFileSize(newFile)) {
+        alert("File size exceeds the 20MB limit. Please upload a smaller file.");
+        return;
+      }
+
+      setFile(newFile);
+      setUploadResult(null);
+      setOcrResult(null);
+      handleUpload(newFile);
     }
   }, []);
 
@@ -70,14 +79,20 @@ export default function FileUploader() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
-      if (isValidFileType(selectedFile)) {
-        setFile(selectedFile);
-        setUploadResult(null);
-        setOcrResult(null);
-        handleUpload(selectedFile);
-      } else {
+      if (!isValidFileType(selectedFile)) {
         alert("Only PDF files can be uploaded");
+        return;
       }
+
+      if (!isValidFileSize(selectedFile)) {
+        alert("File size exceeds the 20MB limit. Please upload a smaller file.");
+        return;
+      }
+
+      setFile(selectedFile);
+      setUploadResult(null);
+      setOcrResult(null);
+      handleUpload(selectedFile);
     }
   };
 
