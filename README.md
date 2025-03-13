@@ -1,4 +1,4 @@
-[日本語版readmeはこちら](./README-ja.md)
+[日本語版 readme はこちら](./README-ja.md)
 
 # PDF to Markdown
 
@@ -49,8 +49,8 @@ Follow these steps to deploy the application on Vercel:
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
-   cd pdf-to-markdown
+   git clone https://github.com/link2004/pdf2md.git
+   cd pdf2md
    ```
 
 2. **Copy the .env.example file**
@@ -113,8 +113,8 @@ MISTRAL_API_KEY=your_mistral_api_key
 
 1. Click on the "Upload PDF" button to open the file selection dialog
 2. Select the PDF file you want to analyze (multiple files are also supported)
-   - Note: For server uploads, file size must be 4.5MB or less
-   - For files larger than 4.5MB, use the client upload feature
+   - Note: For server uploads, file size must be 20MB or less
+   - Try clearing your browser cache if you encounter issues
 3. Click on the "Upload" button to upload the PDF to Vercel Blob storage
 4. After the upload is complete, click on the "Analyze with Mistral AI" button
 5. Wait a few seconds to minutes for the analysis to complete (depending on the size and complexity of the PDF)
@@ -152,9 +152,6 @@ MISTRAL_API_KEY=your_mistral_api_key
 # Install dependencies
 npm install
 
-# Install Vercel Blob SDK
-npm install @vercel/blob
-
 # Run the development server
 npm run dev
 ```
@@ -172,8 +169,7 @@ npm run dev
 
 - **Unable to upload PDF**
 
-  - Ensure the file size is 4.5MB or less (for server uploads)
-  - For files larger than 4.5MB, use the client upload feature
+  - Ensure the file size is 20MB or less (for server uploads)
   - Try clearing your browser cache
 
 - **Analysis fails**
